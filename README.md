@@ -67,6 +67,5 @@ offsetTop | Number，此元素距离滚动容器顶部多少像素时开始固�
 ##### 效果预览：
 ![image](https://raw.githubusercontent.com/zhuanshicong/eleFixed/master/demo.gif)
 ##### Demo：
-[link]https://raw.githubusercontent.com/zhuanshicong/eleFixed/master/demo.html)
-##### 删除元素:
+[link](https://raw.githubusercontent.com/zhuanshicong/eleFixed/master/demo.html)
 
