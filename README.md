@@ -8,13 +8,13 @@ eleFixed是一款非常简单的使用动画来固定元素的插件（最常见
 
 引入eleFixed.js
 
-```
+```html
 <script src="eleFixed.js"></script>
 ```
 
 后你需要创建一个实例
 
-```
+```JavaScript
 var eleFixedInstance = new eleFixed();
 ```
 
