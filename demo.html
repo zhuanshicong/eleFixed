@@ -1,70 +1,105 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+	<meta charset="UTF-8">
+	<title>Demo</title>
+	<style type="text/css">
+		#tableContainer{
+			height:100px;
+			overflow: scroll;
+		}
+		table{
+			border-collapse:collapse; 
+		}
+		table thead{
+		    border:0px solid #000080;
+		}
+	</style>
 </head>
-
 <body>
-    <style>
-        #block {
-            height: 200px;
-            background-color: #f1f1f0;
-        }
-        table{
-            border-collapse:collapse;
-        }
-        tr{
-            border: 1px solid #efefef;
-        }
-        thead {
-            background-color: #333;
-        }
-        thead th {
-            vertical-align: bottom;
-            background-color: #9c9c9c;
-        }
-    </style>
-    <div id="block"></div>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>title</th>
-                <th>title</th>
-                <th>title</th>
-                <th>title</th>
-                <th>titlelonglonglong longlonglonglong</th>
-                <th>title</th>
-                <th>title</th>
-                <th>titlelonglonglonglong longlonglonglonglong</th>
-            </tr>
-        </thead>
-        <tbody></tbody>
-    </table>
+	<div id="tableContainer">
+		<table id="test">
+			<thead >
+				<tr id="frozeEle">
+			      	<th bgcolor="#918888">Title1</th>
+			      	<th bgcolor="#918888">Title2</th>
+			      	<th bgcolor="#918888">Title3</th>
+			      	<th bgcolor="#918888">Title4</th>
+			    </tr>
+			</thead>
+			<tbody>
+	             <tr>
+	             	<th>Value 1</th>
+	             	<th>Value 2</th>
+	             	<th>Value 3</th>
+	             	<th>Value 4</th>
+	             </tr>
+	             <tr>
+	             	<th>Value 1</th>
+	             	<th>Value 2</th>
+	             	<th>Value 3</th>
+	             	<th>Value 4</th>
+	             </tr>
+	             <tr>
+	             	<th>Value 1</th>
+	             	<th>Value 2</th>
+	             	<th>Value 3</th>
+	             	<th>Value 4</th>
+	             </tr>
+	             <tr>
+	             	<th>Value 1</th>
+	             	<th>Value 2</th>
+	             	<th>Value 3</th>
+	             	<th>Value 4</th>
+	             </tr>
+	             <tr>
+	             	<th>Value 1</th>
+	             	<th>Value 2</th>
+	             	<th>Value 3</th>
+	             	<th>Value 4</th>
+	             </tr>
+	             <tr>
+	             	<th>Value 1</th>
+	             	<th>Value 2</th>
+	             	<th>Value 3</th>
+	             	<th>Value 4</th>
+	             </tr>
+	             <tr>
+	             	<th>Value 1</th>
+	             	<th>Value 2</th>
+	             	<th>Value 3</th>
+	             	<th>Value 4</th>
+	             </tr>
+	             <tr>
+	             	<th>Value 1</th>
+	             	<th>Value 2</th>
+	             	<th>Value 3</th>
+	             	<th>Value 4</th>
+	             </tr>
+	             <tr>
+	             	<th>Value 1</th>
+	             	<th>Value 2</th>
+	             	<th>Value 3</th>
+	             	<th>Value 4</th>
+	             </tr>
+	             <tr>
+	             	<th>Value 1</th>
+	             	<th>Value 2</th>
+	             	<th>Value 3</th>
+	             	<th>Value 4</th>
+	             </tr>
+	        </tbody>
+		</table>
+	</div>
 </body>
-<script>
-    var tbody = document.getElementsByTagName('tbody')[0]
-    var html = ''
-    for(var i = 0; i< 50; i++){
-        html += '<tr><th>value</th><th>value</th><th>value</th><th>value</th><th>value</th><th>value</th><th>value</th><th>value</th></tr>'
-    }
-    tbody.innerHTML = html
+<script src="./eleFixed.js"></script>
+<script type="text/javascript">
+	var eleFixedInstance = new eleFixed();
+        // add an instance
+        eleFixedInstance.bind({
+            target: document.getElementById('frozeEle'), // it must be a HTMLElement
+            scroll: document.getElementById('tableContainer'),// it must be a HTMLElement
+            offsetTop: 0 // height from window offsetTop
+        })
 </script>
-<script src="./eleFixed.min.js"></script>
-<script>
-    // add an instance
-    eleFixed.push({
-        target: document.getElementsByTagName('thead')[0], // it must be a HTMLElement
-        offsetTop: 210 // height from window offsetTop
-    })
-    
-    // delete one instance
-    // eleFixed.delete(document.getElementsByTagName('thead')[0])
-    
-    // distory eleFixed
-    // eleFixed.distory()
-</script>
-
 </html>
