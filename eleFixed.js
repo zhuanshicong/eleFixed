@@ -1,73 +1,71 @@
-(function(){
-
-    var eleFixed = {
-        targets: [],
-        push: null,
-        distory: null,
-        handler: null,
-        delete: null
-    }
-
-    // push exefixed instance
-    eleFixed.push =  function (option) {
-        if(typeof option !== 'object') return console.error('eleFixed: push param must be a Object')
-        if(!option.target && !isElement(option.target)) return console.error('eleFixed: target must be a HTMLElement')
-        if(!option.offsetTop && typeof option.offsetTop !== 'number') return console.error('eleFixed: param\'s offsetTop must be a Number')
-
-        window.eleFixed.targets.push(option)
-    }
-
-    // eleFixed handler
-    eleFixed.handler = function(){
-        var offsetTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
-        for(var i in eleFixed.targets){
-            if(offsetTop > eleFixed.targets[i].offsetTop){
-                eleFixed.targets[i].target.style.transform = 'translateY('+ (offsetTop - eleFixed.targets[i].offsetTop) +'px)'
-            }else{
-                eleFixed.targets[i].target.style.transform = 'translateY(0px)'
-            }
-        }
-    }
-
-    // delete one eleFixed instance
-    eleFixed.delete = function (target) {
-        if(target && isElement(target)){
-            var targets = window.eleFixed.targets
-            for(var i in targets){
-                if(target.isEqualNode(targets[i].target)){
-                    target.style.transform = 'translateY(0px)'
-                    targets.splice(i, 1)
-                    break
-                }
-            }
-        }
-    }
-
-    // distory eleFixed in window
-    eleFixed.distory = function () {
-        window.removeEventListener('scroll', eleFixed.handler)
-        for(var i in window.eleFixed.targets){
-            window.eleFixed.targets[i].target.style.transform = 'translateY(0px)'
-        }
-        window.eleFixed = null
-    }
-
-    // helper
-    function isElement(value) {
+function eleFixed() {
+    var targets=[];
+    //判断输入是否为html元素
+    function _isElement(value) {
         return (
             typeof HTMLElement === 'object' ? value instanceof HTMLElement :
             value && typeof value === "object" && value !== null && value.nodeType === 1 && typeof value.nodeName==="string"
         )
     }
-
-    // umd expose
-    if (typeof exports == "object") {
-        module.exports = eleFixed
-    } else if (typeof define == "function" && define.amd) {
-        define(function(){ return eleFixed })
-    } else {
-        this.eleFixed = eleFixed
+    //元素冻结位置处理函数
+    function _handler(){
+        for(var i in targets){
+            var offsetTop =targets[i].scroll.scrollTop;
+            if(offsetTop > targets[i].offsetTop){
+                targets[i].target.style.transform = 'translateY('+ (offsetTop - targets[i].offsetTop) +'px)';
+            }else{
+                targets[i].target.style.transform = 'translateY(0px)';
+            }
+        }
+    }
+    //获取私有变量或者访问私有方法
+    this.GetTargets=function() {
+        return targets;
+    }
+    this.pushTargets=function(newTarget) {
+        targets.push(newTarget);
+    }
+    this.Call_isElement=function(value){
+        return _isElement(value);
+    }
+    this.handler=function() {
+        _handler();
+    }
+}
+    //绑定元素
+    eleFixed.prototype.bind =  function (option) {
+        var _isElement=this.Call_isElement;
+        if(typeof option !== 'object') return console.error('eleFixed: push param must be a Object');
+        if(!option.target && !_isElement(option.target)) return console.error('eleFixed: target must be a HTMLElement');
+        if(!option.offsetTop && typeof option.offsetTop !== 'number') return console.error('eleFixed: param\'s offsetTop must be a Number');
+        if(!option.scroll && !_isElement(option.scroll)) return console.error('eleFixed: scroll must be a HTMLElement');  
+        /*window.eleFixed.this.pushTargets(option)*/
+        //if(!scrollTarget && !_isElement(scrollTarget)) return console.error('eleFixed: scrollTarget must be a HTMLElement') 
+        this.pushTargets(option);
+        option.scroll.addEventListener('scroll', this.handler);
     }
 
-    window.addEventListener('scroll', eleFixed.handler)
-})()
+    //解除绑定
+    eleFixed.prototype.unbind = function (target) {
+        var _isElement=this.Call_isElement;
+        if(target && _isElement(target)){
+            var targets = this.GetTargets();
+            for(var i in targets){
+                if(target.isEqualNode(targets[i].target)){
+                    target.style.transform = 'translateY(0px)'
+                    try{
+                        targets[i].scroll.removeEventListener('scroll',this.handler);
+                    }
+                    catch(e)
+                    {
+                        return console.error(e);
+                    }
+                    targets.splice(i, 1);
+                    break
+                }
+            }
+        }
+        else{
+            return console.error('eleFixed: target must be a HTMLElement');
+        }
+    }
